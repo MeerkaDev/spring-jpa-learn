@@ -7,6 +7,7 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.experimental.FieldDefaults;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Getter
@@ -14,27 +15,26 @@ import java.util.List;
 @FieldDefaults(level = AccessLevel.PRIVATE)
 
 @Entity
-@Table(name = "products")
-public class Product {
+@Table(name = "orders")
+public class Order {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    long id;
-    String name;
-    double price;
+    Long id;
 
     @ManyToOne
-    @JoinColumn(name = "category_id")
-    Category category;
+    @JoinColumn(name = "user_id")
+    User user;
 
-    @OneToMany(mappedBy = "product")
-    @JsonIgnore
-    List<Value> values;
+    @Enumerated
+    OrderStatus status;
 
-    @OneToMany(mappedBy = "product")
-    @JsonIgnore
-    List<ProductInOrder> productInOrders;
+    String address;
 
-    @OneToMany(mappedBy = "product")
+    @Column(name = "created_date")
+    LocalDateTime createdDate;
+
+    @OneToMany(mappedBy = "order")
     @JsonIgnore
-    List<Review> reviews;
+    List<ProductInOrder> productsInOrder;
 }
