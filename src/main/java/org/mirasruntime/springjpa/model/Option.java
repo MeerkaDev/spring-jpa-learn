@@ -18,7 +18,7 @@ import java.util.List;
 public class Option {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    long id;
+    Long id;
     String name;
 
     @ManyToOne
